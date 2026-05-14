@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import FlatCards from './component/FlatCards'
 import ElevatedCards from './component/ElevatedCards'
 import FancyCards from './component/FancyCards'
+import ActionCards from './component/ActionCards'
 
 
 const App = () => {
@@ -15,6 +16,7 @@ const App = () => {
       <FlatCards/>
       <ElevatedCards/>
       <FancyCards/>
+      <ActionCards/>
       </ScrollView>
     </SafeAreaView>
   )
