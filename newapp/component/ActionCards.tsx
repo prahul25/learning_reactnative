@@ -22,6 +22,10 @@ export default function ActionCards() {
           <Text style={styles.cardTitle}>Call Us</Text>
           <Text style={styles.cardDesc}>Deep link to phone dialer</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.card} onPress={() => openWebsite('https://sharedpro.co')}>
+            <Text style={styles.cardTitle}>Sharedpro</Text>
+            <Text style={styles.cardDesc}>Open sharedpro website</Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
