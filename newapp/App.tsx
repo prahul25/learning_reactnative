@@ -1,22 +1,13 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import FlatCards from './component/FlatCards'
-import ElevatedCards from './component/ElevatedCards'
-import FancyCards from './component/FancyCards'
-import ActionCards from './component/ActionCards'
-
+import PasswordGenerator from './component/PasswordGenerator'
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <ScrollView>
-
-
-      <FlatCards/>
-      <ElevatedCards/>
-      <FancyCards/>
-      <ActionCards/>
+    <SafeAreaView style={styles.safe}>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <PasswordGenerator />
       </ScrollView>
     </SafeAreaView>
   )
@@ -24,4 +15,13 @@ const App = () => {
 
 export default App
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: '#F5F5FA',
+  },
+  scroll: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+})
