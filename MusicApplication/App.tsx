@@ -11,14 +11,20 @@ import {
   SafeAreaProvider
 } from 'react-native-safe-area-context';
 import AppNavigator from './src/navigation/navigation';
+import { ThemeProvider } from './src/context/ThemeContext';
+
 
 function App() {
 
+
+
   return (
     <SafeAreaProvider>
+    <ThemeProvider>
       <NavigationContainer>
 <AppNavigator/>
 </NavigationContainer>
+</ThemeProvider>
     </SafeAreaProvider>
   );
 }
