@@ -5,19 +5,20 @@
  * @format
  */
 
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
 import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
+  SafeAreaProvider
 } from 'react-native-safe-area-context';
+import AppNavigator from './src/navigation/navigation';
 
 function App() {
 
   return (
     <SafeAreaProvider>
-<View>
-        <Text>njnm kj</Text>
-</View>
+      <NavigationContainer>
+<AppNavigator/>
+</NavigationContainer>
     </SafeAreaProvider>
   );
 }
