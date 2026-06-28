@@ -1,11 +1,16 @@
 import {View, Text, TextInput, FlatList, Image, Pressable} from 'react-native';
 import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSearch} from '../context/SearchContext';
 import {useTheme} from '../context/ThemeContext';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {spacing, radius, typography} from '../constants/theme';
+import type {RootStackParamList} from '../navigation/navigation';
 
 export default function SearchScreen() {
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {query, results, loading, setQuery, search} = useSearch();
   const {colors} = useTheme();
   const {loadTrack} = useAudioPlayer();
@@ -18,6 +23,7 @@ export default function SearchScreen() {
       artworkUrl: item.image,
       duration: item.duration,
     });
+    navigation.navigate('NowPlaying');
   };
 
   return (
