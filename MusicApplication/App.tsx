@@ -13,6 +13,7 @@ import {
 import AppNavigator from './src/navigation/navigation';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { AudioPlayerProvider } from './src/context/AudioPlayerContext';
+import { SearchProvider } from './src/context/SearchContext';
 
 
 function App() {
@@ -21,9 +22,11 @@ function App() {
     <SafeAreaProvider>
     <ThemeProvider>
       <AudioPlayerProvider>
+        <SearchProvider>
       <NavigationContainer>
 <AppNavigator/>
 </NavigationContainer>
+</SearchProvider>
 </AudioPlayerProvider>
 </ThemeProvider>
     </SafeAreaProvider>

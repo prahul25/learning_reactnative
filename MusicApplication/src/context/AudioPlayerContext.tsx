@@ -13,6 +13,7 @@ interface AudioPlayerContextType {
     seekTo: (seconds: number) => void;
     skipToNext:() => void;
     skipToPrevious:() => void;
+    loadTrack: (mediaItem: MediaItem) => void;
 }
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | undefined>(
