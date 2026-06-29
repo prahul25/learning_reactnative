@@ -23,6 +23,7 @@ interface AudioPlayerContextType {
   removeFromQueue: (index: number) => void;
   moveInQueue: (fromIndex: number, toIndex: number) => void;
   clearQueue: () => void;
+  skipToIndex: (index: number) => void;
 }
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | undefined>(
@@ -72,6 +73,9 @@ export function AudioPlayerProvider({children}: {children: React.ReactNode}) {
       },
       clearQueue: () => {
         TrackPlayer.clear();
+      },
+      skipToIndex: (index: number) => {
+        TrackPlayer.skipToIndex(index);
       },
     }),
     [isPlaying, currentTrack, position, duration, queue, currentIndex],

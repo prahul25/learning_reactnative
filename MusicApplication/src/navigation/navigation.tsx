@@ -9,6 +9,7 @@ import NowPlayingScreen from '../screens/NowPlayingScreen';
 import PlaylistDetailScreen from '../screens/PlaylistDetailScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import QueueScreen from '../screens/QueueScreen';
+import DownloadsScreen from '../screens/DownloadsScreen';
 import MiniPlayer from '../components/MiniPlayer';
 
 export type RootTabParamList = {
@@ -24,6 +25,7 @@ export type RootStackParamList = {
   PlaylistDetail: {playlistId: string};
   Favorites: undefined;
   Queue: undefined;
+  Downloads: undefined;
 };
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -55,6 +57,7 @@ export default function AppNavigator() {
       <Stack.Screen name="PlaylistDetail" component={PlaylistDetailScreen} />
       <Stack.Screen name="Favorites" component={FavoritesScreen} />
       <Stack.Screen name="Queue" component={QueueScreen} />
+      <Stack.Screen name="Downloads" component={DownloadsScreen} />
     </Stack.Navigator>
   );
 }

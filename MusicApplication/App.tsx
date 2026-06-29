@@ -16,6 +16,7 @@ import { AudioPlayerProvider } from './src/context/AudioPlayerContext';
 import { SearchProvider } from './src/context/SearchContext';
 import { PlaylistProvider } from './src/context/PlaylistContext';
 import { FavoritesProvider } from './src/context/FavoritesContext';
+import { DownloadProvider } from './src/context/DownloadContext';
 
 
 function App() {
@@ -27,9 +28,11 @@ function App() {
         <SearchProvider>
           <PlaylistProvider>
             <FavoritesProvider>
+              <DownloadProvider>
       <NavigationContainer>
 <AppNavigator/>
 </NavigationContainer>
+</DownloadProvider>
 </FavoritesProvider>
 </PlaylistProvider>
 </SearchProvider>

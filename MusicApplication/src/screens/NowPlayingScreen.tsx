@@ -12,6 +12,7 @@ import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useTheme} from '../context/ThemeContext';
 import {useFavorites} from '../context/FavoritesContext';
+import {useDownloads} from '../context/DownloadContext';
 import {spacing, radius, typography} from '../constants/theme';
 import type {RootStackParamList} from '../navigation/navigation';
 
@@ -39,6 +40,7 @@ export default function NowPlayingScreen() {
   } = useAudioPlayer();
   const {colors} = useTheme();
   const {toggleFavorite, isFavorite} = useFavorites();
+  const {downloadSong, deleteDownload, isDownloaded, getStatus} = useDownloads();
 
   const progress = duration > 0 ? position / duration : 0;
 
@@ -107,6 +109,39 @@ export default function NowPlayingScreen() {
           style={{alignSelf: 'center', padding: spacing.sm}}>
           <Text style={{fontSize: 28}}>
             {isFavorite(currentTrack.mediaId ?? '') ? '❤️' : '🤍'}
+          </Text>
+        </Pressable>
+      )}
+      {currentTrack && (
+        <Pressable
+          onPress={() => {
+            const id = currentTrack.mediaId ?? '';
+            if (isDownloaded(id)) {
+              deleteDownload(id);
+            } else {
+              downloadSong({
+                id: currentTrack.mediaId ?? '',
+                name: currentTrack.title ?? '',
+                artists: currentTrack.artist ?? '',
+                image:
+                  typeof currentTrack.artworkUrl === 'string'
+                    ? currentTrack.artworkUrl
+                    : '',
+                downloadUrl:
+                  typeof currentTrack.url === 'string'
+                    ? currentTrack.url
+                    : '',
+                duration: currentTrack.duration ?? 0,
+              });
+            }
+          }}
+          style={{alignSelf: 'center', padding: spacing.sm}}>
+          <Text style={{fontSize: 22}}>
+            {getStatus(currentTrack.mediaId ?? '') === 'done'
+              ? '🗑'
+              : getStatus(currentTrack.mediaId ?? '') === 'downloading'
+              ? '⏳'
+              : '⬇'}
           </Text>
         </Pressable>
       )}

@@ -7,6 +7,7 @@ import {useTheme} from '../context/ThemeContext';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {usePlaylist} from '../context/PlaylistContext';
 import {useFavorites} from '../context/FavoritesContext';
+import {useDownloads} from '../context/DownloadContext';
 import {spacing, radius, typography} from '../constants/theme';
 import type {RootStackParamList} from '../navigation/navigation';
 
@@ -18,6 +19,7 @@ export default function SearchScreen() {
   const {loadTrack} = useAudioPlayer();
   const {playlists, addSong} = usePlaylist();
   const {toggleFavorite, isFavorite} = useFavorites();
+  const {downloadSong, getStatus} = useDownloads();
 
   const handlePlay = (item: {name: string; artists: string; downloadUrl: string; image: string; duration: number}) => {
     loadTrack({
@@ -112,6 +114,26 @@ export default function SearchScreen() {
               style={{padding: spacing.sm}}>
               <Text style={{fontSize: 22}}>
                 {isFavorite(item.id) ? '❤️' : '🤍'}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() =>
+                downloadSong({
+                  id: item.id,
+                  name: item.name,
+                  artists: item.artists,
+                  image: item.image,
+                  downloadUrl: item.downloadUrl,
+                  duration: item.duration,
+                })
+              }
+              style={{padding: spacing.sm}}>
+              <Text style={{fontSize: 18}}>
+                {getStatus(item.id) === 'done'
+                  ? '✅'
+                  : getStatus(item.id) === 'downloading'
+                  ? '⏳'
+                  : '⬇'}
               </Text>
             </Pressable>
           </Pressable>

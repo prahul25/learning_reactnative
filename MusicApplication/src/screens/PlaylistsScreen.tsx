@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {usePlaylist} from '../context/PlaylistContext';
 import {useFavorites} from '../context/FavoritesContext';
+import {useDownloads} from '../context/DownloadContext';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useTheme} from '../context/ThemeContext';
 import {spacing, radius, typography} from '../constants/theme';
@@ -14,6 +15,7 @@ export default function PlaylistsScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {playlists, createPlaylist, deletePlaylist} = usePlaylist();
   const {favorites} = useFavorites();
+  const {downloads} = useDownloads();
   const {loadTrack} = useAudioPlayer();
   const {colors} = useTheme();
   const [showInput, setShowInput] = useState(false);
@@ -78,6 +80,7 @@ export default function PlaylistsScreen() {
         data={playlists}
         keyExtractor={item => item.id}
         ListHeaderComponent={
+          <>
           <Pressable
             onPress={() => navigation.navigate('Favorites')}
             style={{
@@ -101,6 +104,30 @@ export default function PlaylistsScreen() {
             </View>
             <Text style={{color: colors.primary, fontSize: 20}}>›</Text>
           </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate('Downloads')}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: spacing.md,
+              backgroundColor: colors.surface,
+              borderRadius: radius.md,
+              marginBottom: spacing.md,
+              borderWidth: 1,
+              borderColor: colors.border,
+            }}>
+            <View>
+              <Text style={{color: colors.text, fontSize: typography.body, fontWeight: '600'}}>
+                ⬇ Downloads
+              </Text>
+              <Text style={{color: colors.textSecondary, fontSize: typography.caption}}>
+                {downloads.filter(d => d.status === 'done').length} songs
+              </Text>
+            </View>
+            <Text style={{color: colors.textSecondary, fontSize: 20}}>›</Text>
+          </Pressable>
+          </>
         }
         renderItem={({item}) => (
           <Pressable
