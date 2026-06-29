@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
@@ -31,10 +31,29 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+const tabIcons: Record<string, string> = {
+  Home: '🏠',
+  Search: '🔍',
+  Library: '📚',
+  Settings: '⚙',
+};
+
 function MainTabs() {
   return (
     <View style={{flex: 1}}>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <Text style={{fontSize: 22, opacity: focused ? 1 : 0.5}}>
+              {tabIcons[route.name]}
+            </Text>
+          ),
+          tabBarActiveTintColor: '#1DB954',
+          tabBarInactiveTintColor: '#666',
+          tabBarStyle: {paddingBottom: 4, height: 56},
+          tabBarLabelStyle: {fontSize: 11},
+        })}>
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
         <Tab.Screen name="Library" component={PlaylistsScreen} />
