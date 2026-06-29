@@ -14,6 +14,7 @@ import AppNavigator from './src/navigation/navigation';
 import { ThemeProvider } from './src/context/ThemeContext';
 import { AudioPlayerProvider } from './src/context/AudioPlayerContext';
 import { SearchProvider } from './src/context/SearchContext';
+import { PlaylistProvider } from './src/context/PlaylistContext';
 
 
 function App() {
@@ -23,9 +24,11 @@ function App() {
     <ThemeProvider>
       <AudioPlayerProvider>
         <SearchProvider>
+          <PlaylistProvider>
       <NavigationContainer>
 <AppNavigator/>
 </NavigationContainer>
+</PlaylistProvider>
 </SearchProvider>
 </AudioPlayerProvider>
 </ThemeProvider>

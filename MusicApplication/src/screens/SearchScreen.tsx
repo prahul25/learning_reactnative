@@ -1,10 +1,11 @@
-import {View, Text, TextInput, FlatList, Image, Pressable} from 'react-native';
+import {View, Text, TextInput, FlatList, Image, Pressable, Alert} from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSearch} from '../context/SearchContext';
 import {useTheme} from '../context/ThemeContext';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
+import {usePlaylist} from '../context/PlaylistContext';
 import {spacing, radius, typography} from '../constants/theme';
 import type {RootStackParamList} from '../navigation/navigation';
 
@@ -14,6 +15,7 @@ export default function SearchScreen() {
   const {query, results, loading, setQuery, search} = useSearch();
   const {colors} = useTheme();
   const {loadTrack} = useAudioPlayer();
+  const {playlists, addSong} = usePlaylist();
 
   const handlePlay = (item: {name: string; artists: string; downloadUrl: string; image: string; duration: number}) => {
     loadTrack({
@@ -53,6 +55,27 @@ export default function SearchScreen() {
         renderItem={({item}) => (
           <Pressable
             onPress={() => handlePlay(item)}
+            onLongPress={() => {
+              if (playlists.length === 0) {
+                Alert.alert('No playlists', 'Create a playlist first');
+                return;
+              }
+              Alert.alert('Add to Playlist', item.name, [
+                ...playlists.map(p => ({
+                  text: p.name,
+                  onPress: () =>
+                    addSong(p.id, {
+                      id: item.id,
+                      name: item.name,
+                      artists: item.artists,
+                      image: item.image,
+                      downloadUrl: item.downloadUrl,
+                      duration: item.duration,
+                    }),
+                })),
+                {text: 'Cancel', style: 'cancel'},
+              ]);
+            }}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
