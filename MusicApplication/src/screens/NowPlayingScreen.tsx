@@ -8,10 +8,12 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useTheme} from '../context/ThemeContext';
 import {useFavorites} from '../context/FavoritesContext';
 import {spacing, radius, typography} from '../constants/theme';
+import type {RootStackParamList} from '../navigation/navigation';
 
 const {width} = Dimensions.get('window');
 const ARTWORK_SIZE = width - spacing.md * 4;
@@ -23,7 +25,8 @@ function formatTime(seconds: number): string {
 }
 
 export default function NowPlayingScreen() {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {
     isPlaying,
     currentTrack,
@@ -130,8 +133,8 @@ export default function NowPlayingScreen() {
       </View>
 
       <View style={styles.controls}>
-        <Pressable>
-          <Text style={[styles.controlIcon, {color: colors.text}]}>🔀</Text>
+        <Pressable onPress={() => navigation.navigate('Queue')}>
+          <Text style={[styles.controlIcon, {color: colors.text}]}>📋</Text>
         </Pressable>
         <Pressable onPress={skipToPrevious}>
           <Text style={[styles.controlIcon, {color: colors.text}]}>⏮</Text>
