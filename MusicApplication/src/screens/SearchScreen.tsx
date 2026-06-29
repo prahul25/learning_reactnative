@@ -6,6 +6,7 @@ import {useSearch} from '../context/SearchContext';
 import {useTheme} from '../context/ThemeContext';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {usePlaylist} from '../context/PlaylistContext';
+import {useFavorites} from '../context/FavoritesContext';
 import {spacing, radius, typography} from '../constants/theme';
 import type {RootStackParamList} from '../navigation/navigation';
 
@@ -16,6 +17,7 @@ export default function SearchScreen() {
   const {colors} = useTheme();
   const {loadTrack} = useAudioPlayer();
   const {playlists, addSong} = usePlaylist();
+  const {toggleFavorite, isFavorite} = useFavorites();
 
   const handlePlay = (item: {name: string; artists: string; downloadUrl: string; image: string; duration: number}) => {
     loadTrack({
@@ -96,6 +98,22 @@ export default function SearchScreen() {
                 {item.artists}
               </Text>
             </View>
+            <Pressable
+              onPress={() =>
+                toggleFavorite({
+                  id: item.id,
+                  name: item.name,
+                  artists: item.artists,
+                  image: item.image,
+                  downloadUrl: item.downloadUrl,
+                  duration: item.duration,
+                })
+              }
+              style={{padding: spacing.sm}}>
+              <Text style={{fontSize: 22}}>
+                {isFavorite(item.id) ? '❤️' : '🤍'}
+              </Text>
+            </Pressable>
           </Pressable>
         )}
         ListEmptyComponent={

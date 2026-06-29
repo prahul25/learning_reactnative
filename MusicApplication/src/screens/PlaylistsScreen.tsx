@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {usePlaylist} from '../context/PlaylistContext';
+import {useFavorites} from '../context/FavoritesContext';
+import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useTheme} from '../context/ThemeContext';
 import {spacing, radius, typography} from '../constants/theme';
 import type {RootStackParamList} from '../navigation/navigation';
@@ -11,6 +13,8 @@ export default function PlaylistsScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const {playlists, createPlaylist, deletePlaylist} = usePlaylist();
+  const {favorites} = useFavorites();
+  const {loadTrack} = useAudioPlayer();
   const {colors} = useTheme();
   const [showInput, setShowInput] = useState(false);
   const [newName, setNewName] = useState('');
@@ -73,6 +77,31 @@ export default function PlaylistsScreen() {
       <FlatList
         data={playlists}
         keyExtractor={item => item.id}
+        ListHeaderComponent={
+          <Pressable
+            onPress={() => navigation.navigate('Favorites')}
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: spacing.md,
+              backgroundColor: colors.surface,
+              borderRadius: radius.md,
+              marginBottom: spacing.md,
+              borderWidth: 1,
+              borderColor: colors.primary,
+            }}>
+            <View>
+              <Text style={{color: colors.text, fontSize: typography.body, fontWeight: '600'}}>
+                ♥ Favorites
+              </Text>
+              <Text style={{color: colors.textSecondary, fontSize: typography.caption}}>
+                {favorites.length} songs
+              </Text>
+            </View>
+            <Text style={{color: colors.primary, fontSize: 20}}>›</Text>
+          </Pressable>
+        }
         renderItem={({item}) => (
           <Pressable
             onPress={() =>

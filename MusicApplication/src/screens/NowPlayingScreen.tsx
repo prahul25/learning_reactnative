@@ -10,6 +10,7 @@ import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {useAudioPlayer} from '../context/AudioPlayerContext';
 import {useTheme} from '../context/ThemeContext';
+import {useFavorites} from '../context/FavoritesContext';
 import {spacing, radius, typography} from '../constants/theme';
 
 const {width} = Dimensions.get('window');
@@ -34,6 +35,7 @@ export default function NowPlayingScreen() {
     skipToPrevious,
   } = useAudioPlayer();
   const {colors} = useTheme();
+  const {toggleFavorite, isFavorite} = useFavorites();
 
   const progress = duration > 0 ? position / duration : 0;
 
@@ -80,6 +82,31 @@ export default function NowPlayingScreen() {
           {currentTrack?.artist ?? ''}
         </Text>
       </View>
+
+      {currentTrack && (
+        <Pressable
+          onPress={() =>
+            toggleFavorite({
+              id: currentTrack.mediaId ?? '',
+              name: currentTrack.title ?? '',
+              artists: currentTrack.artist ?? '',
+              image:
+                typeof currentTrack.artworkUrl === 'string'
+                  ? currentTrack.artworkUrl
+                  : '',
+              downloadUrl:
+                typeof currentTrack.url === 'string'
+                  ? currentTrack.url
+                  : '',
+              duration: currentTrack.duration ?? 0,
+            })
+          }
+          style={{alignSelf: 'center', padding: spacing.sm}}>
+          <Text style={{fontSize: 28}}>
+            {isFavorite(currentTrack.mediaId ?? '') ? '❤️' : '🤍'}
+          </Text>
+        </Pressable>
+      )}
 
       <View style={styles.progressContainer}>
         <Pressable
